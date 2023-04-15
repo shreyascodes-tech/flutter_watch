@@ -110,14 +110,14 @@ Future<Process> createFlutterProcess(
   final Directory dir,
   final List<String> args,
 ) async {
-  if (args.contains("-d")) {}
-
   final p = await Process.start(
     'flutter',
     [
       "run",
-      if (!args.contains("-d")) "-d",
-      (await getDevices()).id,
+      if (!args.contains("-d")) ...[
+        "-d",
+        (await getDevices()).id,
+      ],
       ...args,
     ],
     workingDirectory: dir.absolute.path,
